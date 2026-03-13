@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A participant or admin in the mentoring system.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier." },
+        "name": { "type": "string", "description": "Full name." },
+        "email": { "type": "string", "description": "Email address." },
+        "role": { "type": "string", "enum": ["admin", "participant"], "description": "User role." }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "MentoringSession": {
+      "title": "MentoringSession",
+      "description": "A mentoring session.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier." },
+        "title": { "type": "string", "description": "Session title." },
+        "description": { "type": "string", "description": "Session description." },
+        "date": { "type": "string", "format": "date-time", "description": "Session date and time." },
+        "onlineClassLink": { "type": "string", "description": "Link to online class." },
+        "status": { "type": "string", "enum": ["upcoming", "ongoing", "completed"], "description": "Session status." }
+      },
+      "required": ["id", "title", "date", "status"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A task for a participant.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier." },
+        "sessionId": { "type": "string", "description": "Reference to MentoringSession." },
+        "participantId": { "type": "string", "description": "Reference to User (participant)." },
+        "title": { "type": "string", "description": "Task title." },
+        "description": { "type": "string", "description": "Task description." },
+        "status": { "type": "string", "enum": ["pending", "in-progress", "completed"], "description": "Task status." }
+      },
+      "required": ["id", "sessionId", "participantId", "title", "status"]
+    },
+    "Progress": {
+      "title": "Progress",
+      "description": "Progress update for a participant in a session.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier." },
+        "sessionId": { "type": "string", "description": "Reference to MentoringSession." },
+        "participantId": { "type": "string", "description": "Reference to User (participant)." },
+        "note": { "type": "string", "description": "Progress note." },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Update timestamp." }
+      },
+      "required": ["id", "sessionId", "participantId", "note", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "User profiles."
+    },
+    "/sessions/{sessionId}": {
+      "schema": { "$ref": "MentoringSession" },
+      "description": "Mentoring sessions."
+    },
+    "/tasks/{taskId}": {
+      "schema": { "$ref": "Task" },
+      "description": "Tasks for participants."
+    },
+    "/progress/{progressId}": {
+      "schema": { "$ref": "Progress" },
+      "description": "Progress updates."
+    }
+  }
+}
