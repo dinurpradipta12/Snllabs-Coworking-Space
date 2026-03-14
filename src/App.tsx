@@ -11,6 +11,11 @@ import { LogIn } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import BottomNav from './components/BottomNav';
 import TopNav from './components/TopNav';
+import Schedule from './components/Schedule';
+import Tasks from './components/Tasks';
+import Monitor from './components/Monitor';
+import Profile from './components/Profile';
+import Settings from './components/Settings';
 
 export default function App() {
   const [activePage, setActivePage] = useState('dashboard');
@@ -51,20 +56,22 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f5f5f5] text-[#2d3436] font-sans p-4">
-      <TopNav user={user} />
+    <div className="min-h-screen bg-[#f5f5f5] text-[#2d3436] font-sans p-4 px-2 md:px-6">
+      <div className="w-full">
+        <TopNav user={user} />
 
-      <main className="pb-24">
+        <main className="pb-24">
         {activePage === 'dashboard' && <Dashboard user={user} />}
         {activePage === 'admin' && <div>Admin Content</div>}
-        {activePage === 'schedule' && <div>Schedule Content</div>}
-        {activePage === 'tasks' && <div>Tasks Content</div>}
-        {activePage === 'monitor' && <div>Monitor Content</div>}
-        {activePage === 'ads' && <div>Ads Content</div>}
-        {activePage === 'profile' && <div>Profile Content</div>}
+        {activePage === 'schedule' && <Schedule />}
+        {activePage === 'tasks' && <Tasks />}
+        {activePage === 'monitor' && <Monitor />}
+        {activePage === 'profile' && <Profile />}
+        {activePage === 'settings' && <Settings />}
       </main>
 
       <BottomNav activePage={activePage} setActivePage={setActivePage} />
+      </div>
     </div>
   );
 }
